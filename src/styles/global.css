@@ -452,7 +452,9 @@ html.light {
   height: 100%;
   min-height: 150px;
   max-height: 210px;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
+  background: var(--background);
 }
 .jia-post__content {
   padding: 0.9rem 1rem 1rem 0;
@@ -477,6 +479,7 @@ html.light {
   margin: 0.5rem 0;
   text-indent: 0;
   font: 0.95rem/1.55 var(--body);
+  text-align: left;
 }
 .jia-post__more {
   color: var(--text-link);
