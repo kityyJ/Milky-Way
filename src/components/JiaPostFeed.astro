@@ -8,7 +8,7 @@ const englishCopy = {
 };
 let initialPosts = [];
 try {
-  const response = await fetch('https://www.jia.nz/__jia/cloud-posts.json');
+  const response = await fetch('https://blog.jia.nz/__jia/cloud-posts.json');
   if (response.ok) {
     const payload = await response.json();
     initialPosts = (payload.posts || [])
@@ -22,12 +22,12 @@ try {
         return {
           title: (translated?.title || String(post.title || '')).slice(0, 180),
           excerpt: (translated?.excerpt || String(post.excerpt || '')).slice(0, 360),
-          url: `https://www.jia.nz/${path}/`,
+          url: `https://blog.jia.nz/${path}/`,
           cover: /^https:\/\//i.test(post.cover || '') ? post.cover : '',
           publishedAt: post.published_at || '',
         };
       })
-      .filter((post) => post.title && post.url !== 'https://www.jia.nz//');
+      .filter((post) => post.title && post.url !== 'https://blog.jia.nz//');
   }
 } catch {
   initialPosts = [];
@@ -61,7 +61,7 @@ try {
     const list = document.createElement("ul");
     list.className = "jia-post-list";
     for (const post of posts) {
-      if (!post.title || !post.url || !post.url.startsWith("https://www.jia.nz/")) continue;
+      if (!post.title || !post.url || !post.url.startsWith("https://blog.jia.nz/")) continue;
       const item = document.createElement("li");
       item.className = "jia-post";
       if (post.cover && post.cover.startsWith("https://")) {

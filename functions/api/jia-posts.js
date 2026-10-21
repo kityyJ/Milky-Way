@@ -1,4 +1,4 @@
-const SOURCE = "https://www.jia.nz/__jia/cloud-posts.json";
+const SOURCE = "https://blog.jia.nz/__jia/cloud-posts.json";
 const ENGLISH_COPY = {
   "game/td2": { title: "The Division 2 TUY8S3.2 Update Explained: Red Moon Unleashed, Mutiny Rewards, New Weapons & Central Park DLC", excerpt: "A guide to the Red Moon Unleashed event, boss drop rates, event keys, Mutiny rewards, the Lichtenberg named weapon, the Conflict rework, and official details on the Central Park DLC." },
   "tech/google": { title: "Build an Android App with Google AI Studio: From App Generation to Phone Testing", excerpt: "Create a Kotlin and Jetpack Compose Android app with Google AI Studio Build, preview it in the browser, then test it on a phone with ADB or Play internal testing." },
@@ -33,7 +33,7 @@ export async function onRequestGet() {
           title: (translated?.title || String(post.title || "")).slice(0, 180),
           excerpt: (translated?.excerpt || String(post.excerpt || "")).slice(0, 360),
           url: path && !path.split("/").some((part) => !/^[\p{L}\p{N}_-]+$/u.test(part))
-            ? `https://www.jia.nz/${path}/`
+            ? `https://blog.jia.nz/${path}/`
             : "",
           cover: /^https:\/\//i.test(cover) ? cover : "",
           publishedAt: String(post.published_at || ""),

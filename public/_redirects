@@ -1,0 +1,13 @@
+# Legacy blog article URLs moved from www.jia.nz to blog.jia.nz.
+/game/* https://blog.jia.nz/game/:splat 301
+/tech/* https://blog.jia.nz/tech/:splat 301
+/ai/* https://blog.jia.nz/ai/:splat 301
+/github/* https://blog.jia.nz/github/:splat 301
+/guide/* https://blog.jia.nz/guide/:splat 301
+/education/* https://blog.jia.nz/education/:splat 301
+/cycling/* https://blog.jia.nz/cycling/:splat 301
+/tobacco/* https://blog.jia.nz/tobacco/:splat 301
+/crypto/* https://blog.jia.nz/crypto/:splat 301
+/life/* https://blog.jia.nz/life/:splat 301
+/site/* https://blog.jia.nz/site/:splat 301
+/v1/* https://blog.jia.nz/v1/:splat 301
