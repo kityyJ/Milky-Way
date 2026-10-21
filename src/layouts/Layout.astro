@@ -3,6 +3,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 const { pageTitle = 'JIA' } = Astro.props;
+const title = Astro.url.pathname === '/' ? 'hi~JIA' : `${pageTitle} · JIA`;
 const description = 'JIA’s personal website for daily life, practical sharing, digital tools, and technology.';
 ---
 <!DOCTYPE html>
@@ -12,7 +13,7 @@ const description = 'JIA’s personal website for daily life, practical sharing,
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
     <meta property="og:site_name" content="JIA" />
-    <meta property="og:title" content={pageTitle + ' · JIA'} />
+    <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +21,7 @@ const description = 'JIA’s personal website for daily life, practical sharing,
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Pacifico&display=swap" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Pacifico&display=swap" rel="stylesheet">
     <meta name="generator" content={Astro.generator} />
-    <title>{pageTitle} · JIA</title>
+    <title>{title}</title>
   </head>
   <body>
     <div id="scroll-progress" class="scroll-progress" role="progressbar" aria-label="Page reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-visible="false" hidden>
