@@ -59,7 +59,8 @@ li {
 /* Navigation Bar */
 .navbar {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto 1fr;
+  align-items: center;
   margin-top: 0.8rem;
 }
 
