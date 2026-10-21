@@ -3,16 +3,16 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 const { pageTitle = 'JIA' } = Astro.props;
-const description = 'JIA 的个人空间，记录生活片段、实用经验、数码与技术分享。';
+const description = 'JIA’s personal website for daily life, practical sharing, digital tools, and technology.';
 ---
 <!DOCTYPE html>
-<html transition:animate="none" lang="zh-CN">
+<html transition:animate="none" lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     <meta property="og:site_name" content="JIA" />
-    <meta property="og:title" content={`${pageTitle} · JIA`} />
+    <meta property="og:title" content={pageTitle + ' · JIA'} />
     <meta property="og:description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">

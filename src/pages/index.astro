@@ -1,33 +1,31 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import JiaPostFeed from '../components/JiaPostFeed.astro';
-const pageTitle = "首页";
+const pageTitle = "Home";
 ---
 <Layout pageTitle={pageTitle}>
   <div class="gif">
-    <img src="/images/cook_avatar_typing_site.webp" alt="JIA 的动画头像" width="300" height="259" decoding="async">
+    <img src="/images/cook_avatar_typing_site.webp" alt="JIA's animated avatar" width="300" height="259" decoding="async">
   </div>
-  <h1>你好，我是 JIA</h1>
-  <span class="badge">生活记录 · 实用分享 · 数码与技术</span>
-  <p class="intro">
-    这里是我在网络上的个人空间。我喜欢把日常生活里的小事、亲自尝试过的经验，以及数码和技术折腾记录下来，再整理成容易上手的分享。
+  <h1>JIA</h1>
+  <span class="badge">Daily Life &amp; Lifestyle Sharing</span>
+  <h2>About</h2>
+  <p>
+    Welcome to my personal space on the web. I write about everyday life, things I have learned, and the digital tools and technology I enjoy exploring.
   </p>
   <p>
-    内容没有固定边界：有实用教程、开源项目、网络与设备记录，也会聊聊游戏、AI 工具和生活里值得记住的片刻。希望这些笔记能给你一点参考。
+    There is no single topic here. You will find practical guides, notes on devices and networking, open-source projects, games, AI tools, and moments from daily life.
   </p>
-  <div class="center home-actions">
-    <a class="btn-link" href="/posts/">看看最新置顶文章</a>
-    <a class="btn-link btn-link--quiet" href="/works/">浏览我的项目</a>
+  <div class="center">
+    <a href="https://www.jia.nz/" target="_blank" rel="noopener noreferrer">
+      <button class="btn">Visit My Blog</button>
+    </a>
   </div>
-  <h2>最新置顶</h2>
-  <p class="section-note">文章直接读取 JIA BLOG 当前公开置顶内容。</p>
+  <h2>Latest Pinned Post</h2>
   <JiaPostFeed limit={1} />
-  <p class="blog-more"><a href="https://www.jia.nz/" target="_blank" rel="noopener noreferrer">前往 JIA BLOG 阅读全部文章 →</a></p>
-  <h2>我在分享什么</h2>
-  <ul class="topic-list">
-    <li>生活记录与日常经验</li>
-    <li>数码设备、网络与实用技巧</li>
-    <li>开源项目与开发过程</li>
-    <li>AI 工具、游戏和新鲜发现</li>
-  </ul>
+  <p class="blog-more"><a href="/posts/">View all pinned posts →</a></p>
+  <h2>Interests</h2>
+  <p>
+    I enjoy keeping useful notes, sharing what works, and turning everyday discoveries into practical references for others.
+  </p>
 </Layout>

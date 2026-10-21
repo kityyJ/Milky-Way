@@ -1,14 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import JiaPostFeed from "../components/JiaPostFeed.astro";
-const pageTitle = "置顶文章";
+const pageTitle = "Blog";
 ---
 <Layout pageTitle={pageTitle}>
   <div class="gif">
-    <img src="/images/blog.webp" alt="文章与记录" width="300" height="259" decoding="async">
+    <img src="/images/blog.webp" alt="Blog notes" width="300" height="259" decoding="async">
   </div>
-  <h1>JIA BLOG 置顶文章</h1>
-  <p>这里展示博客目前公开置顶的文章。列表按博客的置顶优先级和发布时间排列，打开文章即可在 JIA BLOG 阅读全文。</p>
+  <h2>Latest Pinned Posts</h2>
+  <p>These posts come from the current public pinned list on JIA BLOG, ordered by featured priority and publication date.</p>
   <JiaPostFeed limit={12} />
-  <p class="blog-more"><a href="https://www.jia.nz/" target="_blank" rel="noopener noreferrer">访问 www.jia.nz，浏览全部文章 →</a></p>
+  <p class="blog-more"><a href="https://www.jia.nz/" target="_blank" rel="noopener noreferrer">Visit JIA BLOG for all posts →</a></p>
 </Layout>

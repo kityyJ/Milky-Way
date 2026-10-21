@@ -30,22 +30,22 @@ try {
         <li class="jia-post">
           {post.cover && <img class="jia-post__cover" src={post.cover} alt="" loading="lazy" decoding="async">}
           <div class="jia-post__content">
-            <time class="jia-post__date" datetime={post.publishedAt}>{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('zh-CN') : 'JIA BLOG'}</time>
+            <time class="jia-post__date" datetime={post.publishedAt}>{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US') : 'JIA BLOG'}</time>
             <h3><a href={post.url} target="_blank" rel="noopener noreferrer">{post.title}</a></h3>
             <p>{post.excerpt}</p>
-            <a class="jia-post__more" href={post.url} target="_blank" rel="noopener noreferrer">阅读全文 →</a>
+            <a class="jia-post__more" href={post.url} target="_blank" rel="noopener noreferrer">Read more →</a>
           </div>
         </li>
       ))}
     </ul>
-  ) : <p class="jia-feed__empty">正在读取 JIA BLOG 的置顶文章…</p>}
+  ) : <p class="jia-feed__empty">Loading pinned posts from JIA BLOG…</p>}
 </div>
 <script>
   type JiaPost = { title?: string; excerpt?: string; url?: string; cover?: string; publishedAt?: string };
   const formatDate = (value?: string) => {
     if (!value) return "JIA BLOG";
     const date = new Date(value);
-    return Number.isNaN(date.getTime()) ? "JIA BLOG" : date.toLocaleDateString("zh-CN");
+    return Number.isNaN(date.getTime()) ? "JIA BLOG" : date.toLocaleDateString("en-US");
   };
   function renderPosts(container: HTMLElement, posts: JiaPost[]) {
     const list = document.createElement("ul");
@@ -83,7 +83,7 @@ try {
       more.href = post.url;
       more.target = "_blank";
       more.rel = "noopener noreferrer";
-      more.textContent = "阅读全文 →";
+      more.textContent = "Read more →";
       content.append(date, heading, excerpt, more);
       item.append(content);
       list.append(item);
