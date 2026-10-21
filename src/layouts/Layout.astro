@@ -10,7 +10,7 @@ const description = 'JIA’s personal website for daily life, practical sharing,
   <head>
     <meta charset="utf-8" />
     <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
     <meta property="og:site_name" content="JIA" />
     <meta property="og:title" content={pageTitle + ' · JIA'} />
     <meta property="og:description" content={description} />
@@ -23,6 +23,9 @@ const description = 'JIA’s personal website for daily life, practical sharing,
     <title>{pageTitle} · JIA</title>
   </head>
   <body>
+    <div id="scroll-progress" class="scroll-progress" role="progressbar" aria-label="Page reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-visible="false" hidden>
+      <span>0%</span>
+    </div>
     <Header />
     <main>
       <slot />
@@ -42,6 +45,60 @@ const description = 'JIA’s personal website for daily life, practical sharing,
       }
       colorMode();
       document.addEventListener("astro:after-swap", colorMode);
+
+      const preventZoomGesture = (event: Event) => {
+        if (event.cancelable) event.preventDefault();
+      };
+      for (const type of ["gesturestart", "gesturechange", "gestureend"]) {
+        document.addEventListener(type, preventZoomGesture, { passive: false });
+      }
+      document.addEventListener("touchmove", (event) => {
+        if (event.touches.length > 1) preventZoomGesture(event);
+      }, { passive: false });
+      document.addEventListener("wheel", (event) => {
+        if (event.ctrlKey || event.metaKey) preventZoomGesture(event);
+      }, { passive: false });
+      document.addEventListener("keydown", (event) => {
+        if ((event.ctrlKey || event.metaKey) &&
+            ["Equal", "Minus", "NumpadAdd", "NumpadSubtract", "Digit0", "Numpad0"].includes(event.code)) {
+          event.preventDefault();
+        }
+      });
+
+      let progressFrame = 0;
+      let progressTimer = 0;
+      function updateScrollProgress(reveal = false) {
+        const indicator = document.getElementById("scroll-progress");
+        if (!indicator) return;
+        const root = document.documentElement;
+        const range = Math.max(0, root.scrollHeight - window.innerHeight);
+        const percent = range ? Math.max(0, Math.min(100, window.scrollY / range * 100)) : 0;
+        const rounded = Math.round(percent);
+        indicator.hidden = range <= 0;
+        indicator.style.setProperty("--scroll-progress", percent + "%");
+        indicator.setAttribute("aria-valuenow", String(rounded));
+        const value = indicator.querySelector("span");
+        if (value) value.textContent = rounded + "%";
+        if (reveal && range > 0) {
+          indicator.dataset.visible = "true";
+          window.clearTimeout(progressTimer);
+          progressTimer = window.setTimeout(() => {
+            indicator.dataset.visible = "false";
+          }, 1000);
+        }
+      }
+      window.addEventListener("scroll", () => {
+        if (!progressFrame) progressFrame = window.requestAnimationFrame(() => {
+          progressFrame = 0;
+          updateScrollProgress(true);
+        });
+      }, { passive: true });
+      window.addEventListener("resize", () => updateScrollProgress());
+      window.addEventListener("pageshow", () => updateScrollProgress());
+      document.addEventListener("astro:after-swap", () => updateScrollProgress());
+      new ResizeObserver(() => updateScrollProgress()).observe(document.body);
+      updateScrollProgress();
+
     </script>
   </body>
 </html>
