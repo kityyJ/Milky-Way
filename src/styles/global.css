@@ -530,3 +530,12 @@ html.light {
     padding: 0 1rem 1rem;
   }
 }
+
+/* Keep links readable in the light theme. */
+.light .btn-link,
+.light .jia-post h3 a {
+  color: var(--text-light);
+}
+.light .project-card h2 {
+  color: var(--text-light);
+}
