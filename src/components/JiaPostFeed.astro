@@ -1,0 +1,105 @@
+---
+const limit = Math.max(1, Math.min(Number(Astro.props.limit) || 4, 12));
+let initialPosts = [];
+try {
+  const response = await fetch('https://www.jia.nz/__jia/cloud-posts.json');
+  if (response.ok) {
+    const payload = await response.json();
+    initialPosts = (payload.posts || [])
+      .filter((post) => post.status === 'published' && post.is_top === true)
+      .sort((a, b) => (Number(b.featured_priority) || 0) - (Number(a.featured_priority) || 0)
+        || new Date(b.published_at || 0).getTime() - new Date(a.published_at || 0).getTime())
+      .slice(0, limit)
+      .map((post) => ({
+        title: String(post.title || '').slice(0, 180),
+        excerpt: String(post.excerpt || '').slice(0, 360),
+        url: `https://www.jia.nz/${String(post.public_path || '').replace(/^\/+|\/+$/g, '')}/`,
+        cover: /^https:\/\//i.test(post.cover || '') ? post.cover : '',
+        publishedAt: post.published_at || '',
+      }))
+      .filter((post) => post.title && post.url !== 'https://www.jia.nz//');
+  }
+} catch {
+  initialPosts = [];
+}
+---
+<div class="jia-feed" data-jia-posts data-limit={limit} aria-live="polite">
+  {initialPosts.length ? (
+    <ul class="jia-post-list">
+      {initialPosts.map((post) => (
+        <li class="jia-post">
+          {post.cover && <img class="jia-post__cover" src={post.cover} alt="" loading="lazy" decoding="async">}
+          <div class="jia-post__content">
+            <time class="jia-post__date" datetime={post.publishedAt}>{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('zh-CN') : 'JIA BLOG'}</time>
+            <h3><a href={post.url} target="_blank" rel="noopener noreferrer">{post.title}</a></h3>
+            <p>{post.excerpt}</p>
+            <a class="jia-post__more" href={post.url} target="_blank" rel="noopener noreferrer">阅读全文 →</a>
+          </div>
+        </li>
+      ))}
+    </ul>
+  ) : <p class="jia-feed__empty">正在读取 JIA BLOG 的置顶文章…</p>}
+</div>
+<script>
+  type JiaPost = { title?: string; excerpt?: string; url?: string; cover?: string; publishedAt?: string };
+  const formatDate = (value?: string) => {
+    if (!value) return "JIA BLOG";
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? "JIA BLOG" : date.toLocaleDateString("zh-CN");
+  };
+  function renderPosts(container: HTMLElement, posts: JiaPost[]) {
+    const list = document.createElement("ul");
+    list.className = "jia-post-list";
+    for (const post of posts) {
+      if (!post.title || !post.url || !post.url.startsWith("https://www.jia.nz/")) continue;
+      const item = document.createElement("li");
+      item.className = "jia-post";
+      if (post.cover && post.cover.startsWith("https://")) {
+        const image = document.createElement("img");
+        image.className = "jia-post__cover";
+        image.src = post.cover;
+        image.alt = "";
+        image.loading = "lazy";
+        image.decoding = "async";
+        item.append(image);
+      }
+      const content = document.createElement("div");
+      content.className = "jia-post__content";
+      const date = document.createElement("time");
+      date.className = "jia-post__date";
+      date.dateTime = post.publishedAt || "";
+      date.textContent = formatDate(post.publishedAt);
+      const heading = document.createElement("h3");
+      const title = document.createElement("a");
+      title.href = post.url;
+      title.target = "_blank";
+      title.rel = "noopener noreferrer";
+      title.textContent = post.title;
+      heading.append(title);
+      const excerpt = document.createElement("p");
+      excerpt.textContent = post.excerpt || "";
+      const more = document.createElement("a");
+      more.className = "jia-post__more";
+      more.href = post.url;
+      more.target = "_blank";
+      more.rel = "noopener noreferrer";
+      more.textContent = "阅读全文 →";
+      content.append(date, heading, excerpt, more);
+      item.append(content);
+      list.append(item);
+    }
+    if (list.children.length) container.replaceChildren(list);
+  }
+  document.querySelectorAll<HTMLElement>("[data-jia-posts]").forEach(async (container) => {
+    try {
+      const response = await fetch("/api/jia-posts", { cache: "no-store" });
+      if (!response.ok) return;
+      const payload = await response.json() as { posts?: JiaPost[] };
+      if (Array.isArray(payload.posts)) {
+        renderPosts(container, payload.posts.slice(0, Number(container.dataset.limit) || 4));
+      }
+    } catch {
+      // Keep the statically rendered blog snapshot when the live feed is unavailable.
+    }
+  });
+</script>

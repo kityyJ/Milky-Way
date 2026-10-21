@@ -1,22 +1,31 @@
 ---
-import { getCollection } from "astro:content";
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
-const allProjects = await getCollection("projects");
-const pageTitle = "Works";
+const pageTitle = "我的项目";
 ---
 <Layout pageTitle={pageTitle}>
-    <div class="gif">
-        <img src="/images/laptop.webp" role="presentation" width="300" height="259" decoding="async">
-    </div>
-    <h2>Projects</h2>
-    <ul role="list" class="link-card-grid">
-        {allProjects.map((card) => <Card 
-            url={`/projects/${card.id}/`} 
-            image={card.data.image.url} 
-            title={card.data.title} 
-            body={card.data.description}
-        />)}
-    </ul>
+  <div class="gif">
+    <img src="/images/laptop.webp" alt="JIA 的数码与开发项目" width="300" height="259" decoding="async">
+  </div>
+  <h1>我的项目</h1>
+  <p>这里收录我正在维护或持续记录的项目。项目介绍以各自的公开仓库和演示页面为准。</p>
+  <ul class="project-list">
+    <li class="project-card">
+      <span class="badge">开源工具</span>
+      <h2>Cook Speed DNS</h2>
+      <p>聚合 Cloudflare IPv4 候选，按电信、联通、移动分类展示，并提供 TXT 与 JSON 数据接口。</p>
+      <div class="project-links">
+        <a href="https://github.com/kityyJ/cook-speed-dns" target="_blank" rel="noopener noreferrer">查看 GitHub 仓库 →</a>
+        <a href="https://kityyj.github.io/cook-speed-dns/" target="_blank" rel="noopener noreferrer">打开项目演示 →</a>
+      </div>
+    </li>
+    <li class="project-card">
+      <span class="badge">个人博客</span>
+      <h2>JIA BLOG</h2>
+      <p>记录生活片段、实用经验、数码与技术内容，也把遇到的问题整理成可复用的分享。</p>
+      <div class="project-links">
+        <a href="https://www.jia.nz/" target="_blank" rel="noopener noreferrer">访问 JIA BLOG →</a>
+        <a href="https://www.jia.nz/site/about/" target="_blank" rel="noopener noreferrer">了解博客 →</a>
+      </div>
+    </li>
+  </ul>
 </Layout>
-

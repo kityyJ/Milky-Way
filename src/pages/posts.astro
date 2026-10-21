@@ -1,26 +1,14 @@
 ---
-import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/CardPost.astro";
-const allPosts = await getCollection("posts");
-const pageTitle = "Posts";
+import JiaPostFeed from "../components/JiaPostFeed.astro";
+const pageTitle = "置顶文章";
 ---
-
 <Layout pageTitle={pageTitle}>
-    <div class="gif">
-        <img src="/images/blog.webp" role="presentation" width="300" height="259" decoding="async">
-    </div>
-    <h2>Blog</h2>
-    <ul role="list" class="link-card-grid">
-        {
-            allPosts.map((cardPost) => (
-                <Card
-                    url={`/posts/${cardPost.id}/`}
-                    image={cardPost.data.image.url}
-                    title={cardPost.data.title}
-                    date={cardPost.data.date}
-                />
-            ))
-        }
-    </ul>
+  <div class="gif">
+    <img src="/images/blog.webp" alt="文章与记录" width="300" height="259" decoding="async">
+  </div>
+  <h1>JIA BLOG 置顶文章</h1>
+  <p>这里展示博客目前公开置顶的文章。列表按博客的置顶优先级和发布时间排列，打开文章即可在 JIA BLOG 阅读全文。</p>
+  <JiaPostFeed limit={12} />
+  <p class="blog-more"><a href="https://www.jia.nz/" target="_blank" rel="noopener noreferrer">访问 www.jia.nz，浏览全部文章 →</a></p>
 </Layout>

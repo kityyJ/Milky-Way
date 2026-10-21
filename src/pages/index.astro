@@ -1,51 +1,33 @@
 ---
 import Layout from '../layouts/Layout.astro';
-const pageTitle = "Milky-Way";
+import JiaPostFeed from '../components/JiaPostFeed.astro';
+const pageTitle = "首页";
 ---
 <Layout pageTitle={pageTitle}>
-    <div class="gif">
-        <img src="/images/cook_avatar_typing_site.webp" role="presentation" width="300" height="259" decoding="async">
-    </div>
-    <h1>Milky-Way</h1>
-    <span class="badge">Digital Craftsman (Developer)</span>
-    <h2>About</h2>
-    <p>
-        Praesent malesuada mi nisi, quis tempus magna venenatis ut.
-        Suspendisse tempor sem at scelerisque congue. Curabitur mollis,
-        mi id molestie finibus, metus sem sagittis nunc, euismod feugiat orci neque non lorem.
-        Aenean sollicitudin erat eu molestie tempus. Nunc ac eros elementum, fermentum lacus at,
-        pellentesque mauris. Suspendisse eros neque, interdum euismod consectetur convallis,
-        porttitor at massa. Phasellus a ultrices arcu. Donec viverra, lorem in pellentesque euismod,
-        libero justo gravida nibh, non ultricies justo purus ultrices est.
-    </p>
-    <p>
-        Ut at interdum dui. Donec ut ante ex. Maecenas id ex eget nibh consequat accumsan.
-        Proin semper semper dui nec feugiat. Donec cursus neque id aliquet finibus. Morbi
-        facilisis turpis nibh, nec dictum orci dictum nec. In hac habitasse platea dictumst.
-        Maecenas mollis turpis vitae turpis bibendum, vitae tristique arcu eleifend.
-    </p>
-    <div class="center">
-        <a href="/works/">
-            <button class="btn">My portfolio</button>
-        </a>
-    </div>
-    <h2>Skills</h2>
-    <div class="skills center">
-        <img class="skills__img" width="46" height="46" alt="Python" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"/>
-        <img class="skills__img" width="46" height="46" alt="Golang" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original-wordmark.svg"/>
-        <img class="skills__img" width="46" height="46" alt="JavaScript" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"/>
-		<img class="skills__img" width="46" height="46" alt="TypeScript" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg"/>
-		<img class="skills__img" width="46" height="46" alt="Docker" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg"/>
-		<img class="skills__img" width="46" height="46" alt="Linux" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg"/>
-        <img class="skills__img" width="46" height="46" alt="Kubernetes" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg"/>
-        <img class="skills__img" width="46" height="46" alt="Git" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg"/>
-    </div>
-    <h2>Interests</h2>
-    <p>
-        Ut at interdum dui. Donec ut ante ex. Maecenas id ex eget nibh consequat accumsan.
-        Proin semper semper dui nec feugiat. Donec cursus neque id aliquet finibus. Morbi
-        facilisis turpis nibh, nec dictum orci dictum nec. In hac habitasse platea dictumst.
-        Maecenas mollis turpis vitae turpis bibendum, vitae tristique arcu eleifend.
-    </p>
+  <div class="gif">
+    <img src="/images/cook_avatar_typing_site.webp" alt="JIA 的动画头像" width="300" height="259" decoding="async">
+  </div>
+  <h1>你好，我是 JIA</h1>
+  <span class="badge">生活记录 · 实用分享 · 数码与技术</span>
+  <p class="intro">
+    这里是我在网络上的个人空间。我喜欢把日常生活里的小事、亲自尝试过的经验，以及数码和技术折腾记录下来，再整理成容易上手的分享。
+  </p>
+  <p>
+    内容没有固定边界：有实用教程、开源项目、网络与设备记录，也会聊聊游戏、AI 工具和生活里值得记住的片刻。希望这些笔记能给你一点参考。
+  </p>
+  <div class="center home-actions">
+    <a class="btn-link" href="/posts/">看看最新置顶文章</a>
+    <a class="btn-link btn-link--quiet" href="/works/">浏览我的项目</a>
+  </div>
+  <h2>最新置顶</h2>
+  <p class="section-note">文章直接读取 JIA BLOG 当前公开置顶内容。</p>
+  <JiaPostFeed limit={1} />
+  <p class="blog-more"><a href="https://www.jia.nz/" target="_blank" rel="noopener noreferrer">前往 JIA BLOG 阅读全部文章 →</a></p>
+  <h2>我在分享什么</h2>
+  <ul class="topic-list">
+    <li>生活记录与日常经验</li>
+    <li>数码设备、网络与实用技巧</li>
+    <li>开源项目与开发过程</li>
+    <li>AI 工具、游戏和新鲜发现</li>
+  </ul>
 </Layout>
-

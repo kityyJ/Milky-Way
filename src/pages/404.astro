@@ -1,17 +1,13 @@
 ---
-const description = "404";
-import '../styles/global.css';
+import Layout from '../layouts/Layout.astro';
 ---
-<layout>
-    <div class="lost">
-        <div class="gif">
-            <img src="/images/404.webp" role="presentation" width="300" height="259" decoding="async">
-        </div>
-        <h1 class="lost__header">{ description }</h1>
-        <p class="lost__body">It seems like you've wandered into the wrong forest!</p>
-        <p>
-            <a class="lost__link" href="/">Return Home</a>
-        </p>
+<Layout pageTitle="页面不存在">
+  <div class="lost">
+    <div class="gif">
+      <img src="/images/404.webp" alt="" width="300" height="259" decoding="async">
     </div>
-</layout>
-
+    <h1 class="lost__header">404</h1>
+    <p class="lost__body">这个页面暂时找不到。也许你想回到 JIA 的首页继续看看？</p>
+    <p><a class="lost__link" href="/">回到首页</a></p>
+  </div>
+</Layout>
