@@ -518,20 +518,73 @@ html.light {
   gap: 0.8rem 1.25rem;
   font-family: var(--body);
 }
+.site-status {
+  margin: 0 0 1.25rem;
+}
+.site-status h2 {
+  margin: 0 0 0.7rem;
+  font: 600 1.15rem var(--body);
+  text-decoration: none;
+}
+.site-status__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.site-status__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font: 0.85rem var(--body);
+}
+.site-status__dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #9aa0a6;
+}
+.site-status__item[data-state="operational"] .site-status__dot {
+  background: #36b37e;
+}
+.site-status__item[data-state="degraded"] .site-status__dot,
+.site-status__item[data-state="maintenance"] .site-status__dot {
+  background: #f5b82e;
+}
+.site-status__item[data-state="partial_outage"] .site-status__dot,
+.site-status__item[data-state="major_outage"] .site-status__dot,
+.site-status__item[data-state="outage"] .site-status__dot,
+.site-status__item[data-state="down"] .site-status__dot {
+  background: #e5484d;
+}
+.site-status__value {
+  opacity: 0.72;
+}
 @media (max-width: 560px) {
   .navbar {
-    grid-template-columns: auto 1fr;
-    align-items: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .navbar__title {
+    text-align: center;
   }
   .navbar__menu {
-    font-size: 0.95rem;
+    width: 100%;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 0.35rem;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    font-size: 0.95rem;
   }
   .navbar__menu > a {
-    margin: 0 0.2rem;
+    margin: 0;
   }
   .jia-post__content {
     padding: 0 1rem 1rem;

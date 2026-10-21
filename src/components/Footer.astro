@@ -1,12 +1,60 @@
 ---
 const year = new Date().getFullYear();
+const monitoredSites = [
+  { id: 'jia-blog', label: 'JIA Blog' },
+  { id: 'jia-cook', label: 'Cook' },
+  { id: 'jia-status', label: 'Status' },
+  { id: 'jia-td2', label: 'TD2' },
+];
 ---
 <footer>
   <div class="center">
-    <ul class="footer">
-      <li class="icon__btn"><a class="footer__link" href="https://www.jia.nz/" target="_blank" rel="noopener noreferrer">JIA BLOG</a></li>
-      <li class="icon__btn"><a class="footer__link" href="https://github.com/kityyJ" target="_blank" rel="me noopener noreferrer">GitHub</a></li>
-    </ul>
+    <section class="site-status" data-site-status aria-live="polite" aria-labelledby="site-status-title">
+      <h2 id="site-status-title">Website Status</h2>
+      <ul class="site-status__list">
+        {monitoredSites.map((site) => (
+          <li class="site-status__item" data-status-item={site.id} data-state="checking">
+            <span class="site-status__dot" aria-hidden="true"></span>
+            <span>{site.label}</span>
+            <span class="site-status__value" data-status-value={site.id}>Checking</span>
+          </li>
+        ))}
+      </ul>
+    </section>
     <small>© {year} JIA. All rights reserved.</small>
   </div>
 </footer>
+<script>
+  const statusLabels: Record<string, string> = {
+    operational: "Operational",
+    degraded: "Degraded",
+    maintenance: "Maintenance",
+    partial_outage: "Outage",
+    major_outage: "Outage",
+    outage: "Outage",
+    down: "Outage",
+  };
+  document.querySelectorAll<HTMLElement>("[data-site-status]").forEach(async (container) => {
+    const setState = (id: string, status: string) => {
+      const item = container.querySelector<HTMLElement>(`[data-status-item="${id}"]`);
+      const value = container.querySelector<HTMLElement>(`[data-status-value="${id}"]`);
+      const state = statusLabels[status] ? status : "unknown";
+      if (item) item.dataset.state = state;
+      if (value) value.textContent = statusLabels[status] || "Unknown";
+    };
+    try {
+      const response = await fetch("/api/site-status", { cache: "no-store" });
+      if (!response.ok) throw new Error("Status unavailable");
+      const payload = await response.json() as {
+        available?: boolean;
+        services?: Array<{ id?: string; status?: string }>;
+      };
+      for (const id of ["jia-blog", "jia-cook", "jia-status", "jia-td2"]) {
+        const service = payload.services?.find((item) => item.id === id);
+        setState(id, payload.available && service?.status ? service.status : "unknown");
+      }
+    } catch {
+      for (const id of ["jia-blog", "jia-cook", "jia-status", "jia-td2"]) setState(id, "unknown");
+    }
+  });
+</script>
