@@ -6,9 +6,8 @@ const JSON_HEADERS = {
 
 export async function onRequestGet() {
   try {
-    const response = await fetch(SOURCE, {
+    const response = await fetch(`${SOURCE}?t=${Date.now()}`, {
       headers: { accept: "application/json" },
-      cache: "no-store",
       cf: { cacheTtl: 0, cacheEverything: false },
     });
     if (!response.ok) {
