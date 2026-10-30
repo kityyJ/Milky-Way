@@ -2,20 +2,54 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
-const { pageTitle = 'JIA' } = Astro.props;
-const title = Astro.url.pathname === '/' ? "𝗝𝗜𝗔'𝘀 𝗡𝗼𝗼𝗸" : `${pageTitle} · JIA`;
-const description = 'JIA’s personal website for daily life, practical sharing, digital tools, and technology.';
+import { SITE_URL, SITE_NAME, SITE_ALTERNATE_NAMES, SITE_DESCRIPTION } from '../config/site.mjs';
+const { pageTitle = 'JIA', description = SITE_DESCRIPTION, noindex = false } = Astro.props;
+const isHome = Astro.url.pathname === '/';
+const title = isHome ? SITE_NAME : `${pageTitle} | ${SITE_NAME}`;
+const canonical = new URL(Astro.url.pathname, SITE_URL).href;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    ...(isHome ? [{
+      '@type': 'WebSite',
+      '@id': SITE_URL + '/#website',
+      url: SITE_URL + '/',
+      name: SITE_NAME,
+      alternateName: SITE_ALTERNATE_NAMES,
+      description: SITE_DESCRIPTION,
+      inLanguage: ['en', 'zh-CN']
+    }] : []),
+    {
+      '@type': 'WebPage',
+      '@id': canonical + '#webpage',
+      url: canonical,
+      name: title,
+      description,
+      isPartOf: { '@id': SITE_URL + '/#website' }
+    }
+  ]
+};
+const structuredDataJSON = JSON.stringify(structuredData).replace(/</g, '\\u003c');
+
 ---
 <!DOCTYPE html>
 <html transition:animate="none" lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? "noindex,follow" : "index,follow,max-image-preview:large"} />
+    <link rel="canonical" href={canonical} />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
-    <meta property="og:site_name" content="JIA" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {!noindex && <script type="application/ld+json" set:html={structuredDataJSON} />}
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Pacifico&display=swap" as="style">
