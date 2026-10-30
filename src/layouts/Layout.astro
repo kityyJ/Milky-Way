@@ -5,7 +5,7 @@ import '../styles/global.css';
 import { SITE_URL, SITE_NAME, SITE_ALTERNATE_NAMES, SITE_DESCRIPTION } from '../config/site.mjs';
 const { pageTitle = 'JIA', description = SITE_DESCRIPTION, noindex = false } = Astro.props;
 const isHome = Astro.url.pathname === '/';
-const title = isHome ? SITE_NAME : `${pageTitle} | ${SITE_NAME}`;
+const title = isHome ? "𝗝𝗜𝗔'𝘀 𝗡𝗼𝗼𝗸" : `${pageTitle} · JIA`;
 const canonical = new URL(Astro.url.pathname, SITE_URL).href;
 const structuredData = {
   '@context': 'https://schema.org',
