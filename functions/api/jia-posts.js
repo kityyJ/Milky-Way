@@ -1,7 +1,8 @@
-const SOURCE = "https://blog.jia.nz/__jia/cloud-posts.json";
+const SOURCE = "https://jia-blog.opentex.workers.dev/__jia/cloud-posts.json";
 const JSON_HEADERS = {
   "content-type": "application/json; charset=utf-8",
   "cache-control": "no-store, max-age=0",
+  "access-control-allow-origin": "*",
 };
 
 export async function onRequestGet() {
