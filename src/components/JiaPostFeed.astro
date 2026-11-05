@@ -72,7 +72,7 @@ const initialPosts = [];
   }
   document.querySelectorAll<HTMLElement>("[data-jia-posts]").forEach(async (container) => {
     try {
-      const response = await fetch("/api/jia-posts", { cache: "no-store" });
+      const response = await fetch("https://milky-way-astro.pages.dev/api/jia-posts", { cache: "no-store" });
       if (!response.ok) throw new Error("Feed unavailable");
       const payload = await response.json() as { posts?: JiaPost[] };
       if (Array.isArray(payload.posts)) {
